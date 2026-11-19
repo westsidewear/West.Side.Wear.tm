@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>West Side Wear — маркетплейс одежды</title>
+<meta name="description" content="West Side Wear — молодёжный маркетплейс одежды в Туркменистане. В наличии и под заказ из Китая.">
+<meta property="og:title" content="West Side Wear"><meta property="og:description" content="Молодёжный маркетплейс одежды: мужская, женская, детская."><meta name="theme-color" content="#111">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Ctext x='32' y='46' font-size='38' font-weight='900' text-anchor='middle' fill='%23fff' font-family='Arial'%3EW%3C/text%3E%3Crect x='16' y='50' width='32' height='3' fill='%2300c2c2'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="logo.png">
+<meta property="og:image" content="logo.png"><meta property="og:type" content="website">
+<style>
+:root{--ink:#111;--mute:#767676;--line:#ececec;--bg:#f6f6f6;--acc:#00c2c2;--wa:#25d366}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:10px;padding:10px 14px;max-width:1200px;margin:auto}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.5px;white-space:nowrap}
+.logo i{font-style:normal;color:var(--acc)}
+.search{flex:1;min-width:0}
+.icon{position:relative;padding:8px 10px;border-radius:8px;font-size:14px;font-weight:600;white-space:nowrap}
+.icon:hover{background:var(--bg)}
+.badge{position:absolute;top:0;right:0;background:var(--ink);color:#fff;border-radius:10px;font-size:11px;padding:0 6px;min-width:18px;text-align:center}
+.cats{display:flex;gap:4px;max-width:1200px;margin:auto;padding:0 10px;overflow-x:auto;scrollbar-width:none}
+.cats button{padding:10px 14px;font-weight:700;white-space:nowrap;border-bottom:3px solid transparent;color:var(--mute)}
+.cats button.on{color:var(--ink);border-color:var(--ink)}
+main{max-width:1200px;margin:auto;padding:12px 14px 90px}
+.hero{background:var(--ink);color:#fff;border-radius:14px;padding:22px 20px;margin-bottom:12px}
+.hero h1{font-size:24px;letter-spacing:-.5px}
+.hero p{color:#bbb;margin-top:6px;font-size:14px;max-width:520px}
+.hero b{color:var(--acc)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none;align-items:center}
+.chip{padding:7px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);font-size:14px;white-space:nowrap}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.f.on{background:var(--acc);border-color:var(--acc);color:#001}
+.sep{width:1px;height:22px;background:#ddd;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
+.card{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-align:left}
+.ph{aspect-ratio:1/1;background:#efefef;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative}
+.ph img{width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;left:8px;top:8px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;background:var(--acc);color:#001}
+.tag.cn{background:var(--ink);color:#fff}
+.info{padding:10px 10px 12px}
+.nm{font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:40px}
+.pr{font-weight:800;font-size:17px;margin-top:4px}
+.pr small{font-weight:500;color:var(--mute);font-size:12px}
+.empty{text-align:center;color:var(--mute);padding:50px 10px}
+.btn{display:inline-block;background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;text-align:center}
+.btn.full{width:100%}
+.btn.wa{background:var(--wa);color:#04210f}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.btn.sm{padding:7px 12px;font-size:13px;border-radius:8px}
+.btn.red{background:#e5484d}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50;display:flex;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s;align-items:flex-end;justify-content:center}
+#ov.on{opacity:1;visibility:visible}
+.sheet{background:#fff;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px;position:relative}
+@media(min-width:700px){#ov{align-items:center}.sheet{border-radius:18px}}
+.x{position:absolute;right:10px;top:8px;font-size:26px;padding:4px 10px;color:var(--mute)}
+h2{font-size:20px;margin-bottom:10px;letter-spacing:-.3px;padding-right:30px}
+h3{font-size:15px;margin:16px 0 8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.opt{padding:8px 14px;border:1px solid #ddd;border-radius:8px;font-weight:600;background:#fff}
+.opt.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.field{margin:8px 0}
+.field label{font-size:13px;color:var(--mute);display:block;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0}
+td,th{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--bg)}
+.note{font-size:12px;color:var(--mute)}
+.cm{border-top:1px solid var(--line);padding:10px 0;font-size:14px}
+.cm b{font-size:13px}.cm span{color:var(--mute);font-size:12px}
+.li{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.li .sm{width:54px;height:54px;border-radius:8px;background:#efefef;display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;flex:none}
+.li .sm img{width:100%;height:100%;object-fit:cover}
+.grow{flex:1;min-width:0}
+.tabs{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto}
+.fab{position:fixed;right:16px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:30}
+.fab svg{width:32px;height:32px;fill:#fff}
+footer{background:#fff;border-top:1px solid var(--line);padding:22px 14px 90px;font-size:14px}
+footer .in{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+footer a,footer button.l{display:block;color:var(--mute);margin:4px 0;text-decoration:none;text-align:left}
+footer a:hover,footer button.l:hover{color:var(--ink)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font-size:14px;z-index:90;display:none}
+.ad-item{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.heart{position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);font-size:18px;color:#999;display:flex;align-items:center;justify-content:center}
+.heart.on{color:#e5484d}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.stat{background:var(--bg);border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--mute)}
+.fee{background:#effafa;border:1px solid var(--acc);border-radius:10px;padding:10px 12px;font-size:13px;margin:8px 0}
+@media(max-width:520px){.logo{font-size:15px}.icon{padding:8px 5px;font-size:13px}.top{gap:5px}}
+#intro{position:fixed;inset:0;z-index:100;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .7s,transform .7s}
+#intro.out{opacity:0;transform:scale(1.06);pointer-events:none}
+#intro .lg{font-size:clamp(38px,11vw,84px);font-weight:900;letter-spacing:-2px;line-height:1.1;overflow:hidden}
+#intro .lg span{display:inline-block;transform:translateY(110%);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards}
+#intro .bar{height:3px;width:0;background:var(--acc);margin:18px 0;animation:bar 1.2s .9s cubic-bezier(.2,.8,.2,1) forwards}
+#intro .sub{opacity:0;color:#aaa;max-width:420px;animation:fade 1s 1.5s forwards}
+#intro .go{opacity:0;margin-top:26px;animation:fade 1s 2s forwards}
+@keyframes up{to{transform:none}}@keyframes bar{to{width:min(260px,60vw)}}@keyframes fade{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#intro *{animation-duration:.01s!important;animation-delay:0s!important}}
+html{scroll-behavior:smooth}
+.sheet{transform:translateY(28px);transition:transform .4s cubic-bezier(.22,1,.36,1)}#ov.on .sheet{transform:none}
+#sheet>*{animation:fin .35s ease both}@keyframes fin{from{opacity:0;transform:translateY(8px)}}
+.btn,.opt,.chip,.icon,.heart,.cats button{transition:background .25s ease,color .25s ease,border-color .25s ease,transform .2s ease,box-shadow .25s ease}
+.btn:active,.opt:active{transform:scale(.97)}
+.card{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease}
+@media(hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.08)}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+.bub{max-width:85%;padding:9px 12px;border-radius:14px;margin:6px 0;font-size:14px;animation:fin .3s ease both}
+.bub.me{background:var(--ink);color:#fff;margin-left:auto}.bub.bot{background:var(--bg)}
+#bm{min-height:180px;max-height:42vh;overflow:auto;margin-bottom:8px}
+/* ===== Современный вид ===== */
+:root{--ink:#0b0b0c;--mute:#7a7a85;--line:#ececf0;--bg:#f5f5f7}
+body{font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+header{background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid rgba(0,0,0,.06)}
+.logo{font-weight:800;letter-spacing:-.04em}
+input,select,textarea{border:1px solid var(--line);border-radius:14px;background:#fafafb;padding:12px 14px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);background:#fff;box-shadow:0 0 0 4px rgba(0,194,194,.15)}
+.search{background:#f0f0f3;border-color:transparent;border-radius:999px}
+.icon{border-radius:999px}
+.cats button{font-weight:600}
+.hero{background:radial-gradient(120% 160% at 100% 0%,rgba(0,194,194,.38),transparent 55%),#0b0b0c;border-radius:26px;padding:36px 28px;margin-bottom:16px}
+.hero h1{font-size:clamp(26px,5vw,40px);line-height:1.1;letter-spacing:-.04em;max-width:640px}
+.hero p{font-size:15px;color:#b4b4bd;max-width:520px;margin-top:10px}
+.chip{border-radius:999px;padding:8px 16px;font-weight:500}
+.grid{gap:14px;grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.card{border-radius:20px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 0 0 1px rgba(0,0,0,.03)}
+.ph{aspect-ratio:4/5;background:linear-gradient(145deg,#f1f1f4,#e5e5ea)}
+.info{padding:12px 14px 16px}
+.nm{color:#55555e;font-size:13.5px;min-height:38px}
+.pr{font-size:17px;font-weight:700;letter-spacing:-.03em}
+.tag{left:10px;top:10px;border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.92);color:var(--ink);font-weight:600;backdrop-filter:blur(10px)}
+.tag.cn{background:rgba(11,11,12,.85);color:#fff}
+.heart{right:10px;top:10px;width:36px;height:36px;backdrop-filter:blur(10px)}
+.noph{font-size:12px;color:#a2a2ac;font-weight:500}.li .sm .noph{font-size:9px;text-align:center}
+.btn{border-radius:14px;padding:14px 20px;font-weight:600}.btn.sm{padding:8px 14px;border-radius:10px}
+.opt{border-radius:12px}
+.sheet{border-radius:28px 28px 0 0;padding:22px 20px 26px}
+.sheet::before{content:"";display:block;width:42px;height:4px;border-radius:2px;background:#dcdce1;margin:-8px auto 14px}
+@media(min-width:700px){.sheet{border-radius:28px}.sheet::before{display:none}}
+h2{font-size:22px;letter-spacing:-.03em;font-weight:800}
+.fee,.stat{border-radius:16px}
+.fab{box-shadow:0 8px 24px rgba(37,211,102,.4)}
+footer{border-top:0;margin-top:30px}
+#toast{border-radius:999px;padding:11px 20px}
+.up{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-bottom:14px}
+.upb{grid-column:span 2;grid-row:span 2;aspect-ratio:1;border:2px dashed #cfd2d8;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--mute);background:#fafafb;text-align:center;transition:border-color .25s,color .25s,background .25s}
+.upb:hover{border-color:var(--ink);color:var(--ink);background:#fff}
+.upb span{font-size:56px;line-height:1;font-weight:200}.upb small{font-size:12px;margin-top:4px}
+.th{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}
+.sw{position:relative;max-width:1200px;margin:0 auto;padding:0 14px 10px}
+.sw .search{width:100%;height:50px;font-size:16px;padding:0 54px 0 20px;border-radius:999px;background:#f0f0f3;border:1px solid transparent}
+.sw .search:focus{background:#fff;border-color:var(--ink)}
+.sw svg{position:absolute;right:32px;top:14px;width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="intro"><div class="lg" id="lg" aria-label="West Side Wear"></div><div class="bar"></div><p class="sub" id="isub"></p>
+ <div class="go"><button class="btn" style="background:var(--acc);color:#001" id="igo" onclick="enterSite()"></button> <button class="btn" style="background:transparent;border:1px solid #444" onclick="enterSite(1)">Регистрация</button>
+ <div style="margin-top:16px"><button class="opt" style="background:none;color:#aaa;border:0" onclick="applyLang('ru')">RU</button><button class="opt" style="background:none;color:#aaa;border:0" onclick="applyLang('tk')">TM</button><button class="opt" style="background:none;color:#aaa;border:0" onclick="applyLang('en')">EN</button></div></div></div>
+
+<header>
+  <div class="top">
+    <div class="logo">West Side <i>Wear</i></div>
+    <span style="flex:1"></span>
+    <select id="lsel" onchange="applyLang(this.value)" style="width:auto;padding:6px 4px;font-size:13px" aria-label="Language"><option value="ru">RU</option><option value="tk">TM</option><option value="en">EN</option></select>
+    <button class="icon" onclick="openFavs()" aria-label="Избранное">♥</button>
+    <button class="icon" onclick="openAuth()" id="acc">Войти</button>
+    <button class="icon" onclick="openCart()" id="cartb" aria-label="Корзина">Корзина<span class="badge" id="cn">0</span></button>
+  </div>
+  <div class="sw"><input class="search" id="q" type="search" placeholder="Поиск одежды" aria-label="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></div>
+  <nav class="cats" id="cats"></nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1 id="h1">Одежда, которая уже у нас — и та, что приедет из Китая</h1>
+    <p id="hp">Выбирайте <b>в наличии</b> или заказывайте <b>из Китая</b> по таблице размеров. Оформление заказа — в один клик через WhatsApp.</p>
+  </section>
+  <div class="chips" id="seasons"></div>
+  <div class="chips" id="avail"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <div class="in">
+    <div><div class="logo">West Side <i>Wear</i></div><p class="note" style="margin-top:6px">Маркетплейс одежды для всей семьи</p></div>
+    <div><b>Покупателям</b>
+      <button class="l" onclick="openSizes()">Таблица размеров</button>
+      <button class="l" onclick="openSupport()">Поддержка</button>
+      <button class="l" onclick="openContacts()">Связь</button>
+      <button class="l" onclick="openTerms()">Условия использования</button>
+      <button class="l" onclick="openPage('about')">О нас</button>
+      <button class="l" onclick="openPage('pay')">Оплата и возврат</button>
+      <button class="l" onclick="openPage('ads')">Реклама и сотрудничество</button></div>
+    <div><b>Мы в сети</b>
+      <a href="https://www.tiktok.com/@westsidewear.tm" target="_blank" rel="noopener">TikTok: @westsidewear.tm</a>
+      <a href="https://t.me/westsidewear" target="_blank" rel="noopener">Telegram: @westsidewear</a>
+      <button class="l" onclick="openWA('Здравствуйте! У меня вопрос по West Side Wear.')">WhatsApp</button></div>
+    <div><button class="l" onclick="openAdmin()">Вход для администратора</button></div>
+  </div>
+</footer>
+
+<button class="fab" onclick="openWA('Здравствуйте! У меня вопрос по West Side Wear.')" aria-label="Написать в WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.2.6 4.2 1.6 6L4 28l7.2-1.9c1.7.9 3.6 1.4 5.6 1.4 6.6 0 12-5.4 12-12S22.600 3 16 3zm0 21.800c-1.800 0-3.500-.5-5-1.400l-.4-.2-4.300 1.100 1.200-4.200-.3-.4A9.700 9.700 0 0 1 6.200 15c0-5.400 4.400-9.800 9.800-9.800s9.800 4.400 9.800 9.800-4.400 9.800-9.800 9.800zm5.400-7.300c-.3-.1-1.800-.9-2-1-.3-.1-.5-.1-.7.1l-1 1.200c-.2.200-.4.200-.7.100a8 8 0 0 1-4-3.500c-.3-.5.300-.5.900-1.600.1-.2 0-.4 0-.5l-.9-2.200c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.1.200 2.100 3.200 5.100 4.500 1.900.8 2.600.9 3.600.7.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400-.1-.1-.3-.2-.6-.3z"/></svg>
+</button>
+
+<div id="ov"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ===== Контакты и настройки ===== */
+const WA_B64 = 'OTkzNjU2NjgzNDc=';                 // номер WhatsApp в закодированном виде (на экране не показывается)
+const ADMIN_HASH = '88fbd265c05534947fac7a17f8f8b1108bf78dc50370802ea3d120949ae8b283'; // SHA-256 пароля админа
+const CUR = 'TMT';                                  // валюта (манат). Поменяйте при необходимости
+const TG = 'https://t.me/westsidewear', TT = 'https://www.tiktok.com/@westsidewear.tm';
+
+const CATS = {men:'Мужская', women:'Женская', boys:'Мальчикам', girls:'Девочкам'};
+const SEAS = {winter:'Зима', autumn:'Осень', summer:'Лето', spring:'Весна'};
+const D = {
+ ru:{cats:{men:'Мужская',women:'Женская',boys:'Мальчикам',girls:'Девочкам'},seas:{winter:'Зима',autumn:'Осень',summer:'Лето',spring:'Весна'},all:'Все сезоны',f:['Все товары','В наличии','Заказ с Китая'],q:'Поиск одежды',in:'Войти',cart:'Корзина',h1:'Одежда, которая уже у нас — и та, что приедет из Китая',hp:'Выбирайте товары в наличии или заказывайте с Китая по таблице размеров. Заказ — в один клик через WhatsApp.',stock:'В наличии',cn:'С Китая',sub:'Новый молодёжный маркетплейс одежды Туркменистана',go:'Смотреть каталог',empty:'Ничего не найдено. Попробуйте другой сезон или фильтр.',cab:'Кабинет продавца'},
+ tk:{cats:{men:'Erkekler',women:'Aýallar',boys:'Oglanlar',girls:'Gyzlar'},seas:{winter:'Gyş',autumn:'Güýz',summer:'Tomus',spring:'Ýaz'},all:'Ähli pasyllar',f:['Ähli harytlar','Bar','Hytaýdan sargyt'],q:'Geýim gözle',in:'Girmek',cart:'Sebet',h1:'Bizde bar geýimler we Hytaýdan gelýänler',hp:'Bar bolanlary saýlaň ýa-da Hytaýdan sargyt ediň. Sargyt — WhatsApp arkaly bir basyşda.',stock:'Bar',cn:'Hytaýdan',sub:'Türkmenistanyň täze ýaşlar geýim marketpleýsi',go:'Katalogy görmek',empty:'Hiç zat tapylmady. Başga pasyl ýa-da süzgüç synap görüň.',cab:'Satyjy kabineti'},
+ en:{cats:{men:'Men',women:'Women',boys:'Boys',girls:'Girls'},seas:{winter:'Winter',autumn:'Autumn',summer:'Summer',spring:'Spring'},all:'All seasons',f:['All items','In stock','Order from China'],q:'Search clothes',in:'Sign in',cart:'Cart',h1:'Clothes in stock — and what arrives from China',hp:'Pick items in stock or order from China using the size chart. Order in one tap via WhatsApp.',stock:'In stock',cn:'From China',sub:'The new youth fashion marketplace of Turkmenistan',go:'Browse catalog',empty:'Nothing found. Try another season or filter.',cab:'Seller cabinet'}
+};
+let lang = localStorage.getItem('wsw_lang') || 'ru';
+
+/* ===== Утилиты ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch (e) { return d } };
+/* ===== База данных (Supabase). Пока поля пустые — сайт работает локально ===== */
+const SB_URL = 'https://gdkumvzrhsqmicibqicy.supabase.co', SB_KEY = 'sb_publishable_Fs-x5DKg95C6C9fT7h02Xg_EHJEduQ5';   // вставьте Project URL и anon key из Supabase → Settings → API
+const CLOUD = () => !!(SB_URL && SB_KEY);
+const SYNC = ['products','users','comments','likes','follows','orders'], SNAP = {};
+let sess = load('wsw_sess', null);
+const save = (k, v) => { let ok = true; try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { ok = false; if(!CLOUD()) toast('Память браузера заполнена — уменьшите фото') } cloudSync(k, v); return ok || CLOUD() };
+function recsOf(t, v){
+  if(Array.isArray(v)) return Object.fromEntries(v.map(x=>[String(x.id), t==='users' ? {id:x.id,uid:x.uid,name:x.name,role:x.role,date:x.date} : x]));
+  const o={}; for(const k in v) v[k].forEach(u=>o[k+'_'+u]={k,u}); return o }
+function cloudSync(k, v){
+  const t = k.replace('wsw_',''); if(!CLOUD()||!sess||!SYNC.includes(t)) return;
+  const recs=recsOf(t,v), old=SNAP[t]||{}, up=[];
+  for(const id in recs) if(JSON.stringify(recs[id])!==JSON.stringify(old[id])) up.push({tbl:t,id,data:recs[id]});
+  const del=Object.keys(old).filter(id=>!(id in recs)); SNAP[t]=JSON.parse(JSON.stringify(recs));
+  if(up.length) api('/rest/v1/kv?on_conflict=tbl,id',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(up)}).catch(()=>toast('Нет связи с базой или нет прав'));
+  del.forEach(id=>api(`/rest/v1/kv?tbl=eq.${t}&id=eq.${encodeURIComponent(id)}`,{method:'DELETE'}).catch(()=>{}));
+}
+async function api(path, opt={}, again){
+  const r = await fetch(SB_URL+path,{...opt,headers:{apikey:SB_KEY,...(sess?{Authorization:'Bearer '+sess.token}:(SB_KEY.startsWith('sb_')?{}:{Authorization:'Bearer '+SB_KEY})),'Content-Type':'application/json',...(opt.headers||{})}});
+  if(r.status===401 && sess && !again && await refresh()) return api(path,opt,1);
+  if(!r.ok) throw new Error(await r.text());
+  return r.status===204 ? null : r.json().catch(()=>null) }
+async function auth(kind, body){
+  const r = await fetch(SB_URL+'/auth/v1/'+(kind==='signup'?'signup':'token?grant_type=password'),{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(x=>x.json());
+  if(!r.access_token) throw new Error('auth'); sess={token:r.access_token,refresh:r.refresh_token}; localStorage.setItem('wsw_sess',JSON.stringify(sess)); return r }
+async function refresh(){
+  if(!sess) return false;
+  try{ const r=await fetch(SB_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:sess.refresh})}).then(x=>x.json());
+    if(r.access_token){ sess={token:r.access_token,refresh:r.refresh_token}; localStorage.setItem('wsw_sess',JSON.stringify(sess)); return true } }catch(e){}
+  sess=null; me=null; localStorage.removeItem('wsw_sess'); localStorage.removeItem('wsw_me'); return false }
+async function pull(){
+  if(!CLOUD()) return;
+  try{ const rows=await api('/rest/v1/kv?select=tbl,id,data&limit=5000'), g={}; rows.forEach(r=>(g[r.tbl]=g[r.tbl]||[]).push(r));
+    const arr=t=>(g[t]||[]).map(r=>r.data).sort((a,b)=>b.id-a.id), vs=new Set((g.ver||[]).map(r=>String(r.id)));
+    products=arr('products'); users=arr('users'); comments=arr('comments'); orders=arr('orders');
+    likes={}; follows={}; (g.likes||[]).forEach(r=>(likes[r.data.k]=likes[r.data.k]||[]).push(r.data.u)); (g.follows||[]).forEach(r=>(follows[r.data.k]=follows[r.data.k]||[]).push(r.data.u));
+    SYNC.forEach(t=>SNAP[t]=recsOf(t,t==='likes'?likes:t==='follows'?follows:{products,users,comments,orders}[t]));
+    users.forEach(u=>u.verified=vs.has(String(u.id))); render();
+    if(/^#p\d+$/.test(location.hash)) openProduct(+location.hash.slice(2));
+  }catch(e){ toast('Не удалось загрузить данные') } }
+const money = n => Number(n).toLocaleString('ru-RU') + ' ' + CUR;
+const NOPH = '<span class="noph">Нет фото</span>';
+let tt; function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',2600)}
+async function sha(s){ if(!(window.crypto&&crypto.subtle)){toast('Откройте сайт по https://');return ''} const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('') }
+function openWA(text){ window.open('https://wa.me/'+atob(WA_B64)+'?text='+encodeURIComponent(text),'_blank','noopener') }
+
+/* ===== Данные ===== */
+const SEED = [
+ /* КАТАЛОГ ВЛАДЕЛЬЦА: сюда добавляются товары, которые видят все посетители.
+ Пример (уберите обрамляющие знаки комментария, чтобы включить):
+ {id:1,name:'Куртка зимняя',price:850,cat:'men',season:'winter',inStock:true,china:false,sizes:['M','L','XL'],qty:{M:3},cargo:120,img:'photos/1-1.jpg',imgs:['photos/1-1.jpg','photos/1-2.jpg'],desc:'Описание'},
+ cat: men | women | boys | girls ; season: winter | autumn | summer | spring */
+];
+let products = [...SEED, ...load('wsw_products', []).filter(p=>!SEED.some(x=>x.id===p.id))];
+let users = load('wsw_users', []), comments = load('wsw_comments', []), cart = load('wsw_cart', []), orders = load('wsw_orders', []);
+let me = load('wsw_me', null), isAdmin = sessionStorage.getItem('wsw_admin') === '1';
+let likes = load('wsw_likes', {}), follows = load('wsw_follows', {});
+const S = {cat:'men', season:'all', avail:'all', q:''};
+
+/* ===== Каталог ===== */
+function renderNav(){
+  $('#cats').innerHTML = Object.entries(CATS).map(([k,v])=>`<button class="${S.cat===k?'on':''}" onclick="S.cat='${k}';render()">${v}</button>`).join('') + (me&&me.role==='seller'?'<button onclick="openCabinet()">'+D[lang].cab+'</button>':'');
+  $('#seasons').innerHTML = `<button class="chip ${S.season==='all'?'on':''}" onclick="S.season='all';render()">${D[lang].all}</button>` +
+    Object.entries(SEAS).map(([k,v])=>`<button class="chip ${S.season===k?'on':''}" onclick="S.season='${k}';render()">${v}</button>`).join('');
+  $('#avail').innerHTML = [['all',D[lang].f[0]],['stock',D[lang].f[1]],['china',D[lang].f[2]]].map(([k,v])=>`<button class="chip f ${S.avail===k?'on':''}" onclick="S.avail='${k}';render()">${v}</button>`).join('');
+}
+function render(){
+  renderNav();
+  const q = S.q.trim().toLowerCase();
+  const list = products.filter(p => p.cat===S.cat && (S.season==='all'||p.season===S.season) &&
+    (S.avail==='all' || (S.avail==='stock'&&p.inStock) || (S.avail==='china'&&p.china)) && (!q||p.name.toLowerCase().includes(q)));
+  $('#grid').innerHTML = list.length ? list.map(p=>`
+    <div class="card" role="button" tabindex="0" onclick="openProduct(${p.id})" onkeydown="if(event.key==='Enter')openProduct(${p.id})">
+      <div class="ph">${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name)}">`:NOPH}
+        <span class="tag ${p.inStock?'':'cn'}">${p.inStock?D[lang].stock:p.china?D[lang].cn:'Нет в наличии'}</span><button class="heart ${liked(p.id)?'on':''}" aria-label="В избранное" onclick="event.stopPropagation();toggleLike(${p.id})">${liked(p.id)?'♥':'♡'}</button></div>
+      <div class="info"><div class="nm">${esc(p.name)}</div><div class="pr">${money(p.price)}</div></div>
+    </div>`).join('') : `<div class="empty" style="grid-column:1/-1">${D[lang].empty}</div>`;
+  $('#cn').textContent = cart.reduce((a,i)=>a+i.qty,0);
+  $('#acc').textContent = me ? me.name.split(' ')[0] : D[lang].in;
+}
+$('#q').addEventListener('input', e => { S.q = e.target.value; render() });
+
+/* ===== Модальное окно ===== */
+function modal(html){ $('#sheet').innerHTML = `<button class="x" onclick="closeM()" aria-label="Закрыть">×</button>`+html; $('#ov').classList.add('on') }
+function closeM(){ $('#ov').classList.remove('on') }
+$('#ov').addEventListener('click', e => { if(e.target.id==='ov') closeM() });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeM() });
+
+/* ===== Таблицы размеров ===== */
+function sizeTables(){ return `
+<h3>Взрослые: китайский размер → наш</h3>
+<table><tr><th>Китай</th><th>Наш</th><th>Грудь, см</th><th>Талия, см</th></tr>
+<tr><td>S</td><td>XS / 42</td><td>84–88</td><td>68–72</td></tr>
+<tr><td>M</td><td>S / 44</td><td>88–92</td><td>72–76</td></tr>
+<tr><td>L</td><td>M / 46</td><td>92–96</td><td>76–80</td></tr>
+<tr><td>XL</td><td>L / 48</td><td>96–100</td><td>80–84</td></tr>
+<tr><td>2XL</td><td>XL / 50</td><td>100–104</td><td>84–88</td></tr>
+<tr><td>3XL</td><td>2XL / 52</td><td>104–108</td><td>88–92</td></tr>
+<tr><td>4XL</td><td>3XL / 54</td><td>108–112</td><td>92–96</td></tr></table>
+<h3>Детские: по росту</h3>
+<table><tr><th>Размер</th><th>Рост, см</th><th>Возраст</th></tr>
+<tr><td>110</td><td>105–110</td><td>4–5 лет</td></tr><tr><td>120</td><td>115–120</td><td>6–7 лет</td></tr>
+<tr><td>130</td><td>125–130</td><td>8–9 лет</td></tr><tr><td>140</td><td>135–140</td><td>10–11 лет</td></tr>
+<tr><td>150</td><td>145–150</td><td>12–13 лет</td></tr><tr><td>160</td><td>155–160</td><td>14–15 лет</td></tr></table>
+<p class="note">Размеры ориентировочные. Китайские вещи идут меньше — если сомневаетесь между двумя размерами, берите больший или спросите в поддержке.</p>` }
+function openSizes(){ modal(`<h2>Таблица размеров</h2>${sizeTables()}<button class="btn wa full" style="margin-top:12px" onclick="openWA('Здравствуйте! Подскажите, пожалуйста, какой размер выбрать.')">Спросить размер в WhatsApp</button>`) }
+
+/* ===== Карточка товара ===== */
+let PS = {};
+function openProduct(id){
+  const p = products.find(x=>x.id===id); if(!p) return;
+  PS = {id, size:null, src: p.inStock ? 'stock' : p.china ? 'china' : 'out'};
+  paintProduct();
+}
+function paintProduct(){
+  const p = products.find(x=>x.id===PS.id);
+  const both = p.inStock && p.china;
+  const cms = comments.filter(c=>c.pid===p.id), gal = p.imgs&&p.imgs.length ? p.imgs : (p.img?[p.img]:[]);
+  modal(`
+  <div class="ph" style="border-radius:12px;margin-bottom:10px;max-height:320px">${gal.length?`<img src="${esc(gal[PS.ph||0])}" alt="${esc(p.name)}">`:NOPH}</div>
+  ${gal.length>1?`<div class="row" style="flex-wrap:nowrap;overflow-x:auto">${gal.map((u,i)=>`<img src="${esc(u)}" alt="" onclick="PS.ph=${i};paintProduct()" style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:2px solid ${i===(PS.ph||0)?'var(--ink)':'transparent'};cursor:pointer;flex:none">`).join('')}</div>`:''}
+  <h2>${esc(p.name)}</h2>
+  <div class="row" style="align-items:center"><button class="opt" style="${liked(p.id)?'color:#e5484d':''}" onclick="toggleLike(${p.id},true)">${liked(p.id)?'♥':'♡'} ${(likes[p.id]||[]).length}</button>
+  <button class="opt" onclick="shareP(${p.id})">Поделиться</button>
+  ${p.sellerId?`<span class="note">Продавец: <button style="text-decoration:underline;font-weight:700" onclick="openSeller(${p.sellerId})">${esc(p.sellerName)}${sellerVer(p.sellerId)?' ✓':''}</button> · подписчиков: ${(follows[p.sellerId]||[]).length}</span><button class="opt" onclick="toggleFollow('${p.sellerId}')">${isFollowing(p.sellerId)?'Вы подписаны':'Подписаться'}</button>`:''}</div>
+  <div class="pr" style="font-size:22px">${money(p.price)}</div>
+  ${PS.src==='china'?`<div class="fee">Цена товара: <b>${money(p.price)}</b><br>Карго: <b>${p.cargo!=null?money(p.cargo):'уточняйте у продавца'}</b>${p.cargo!=null?`<br>Итого: <b>${money(p.price+p.cargo)}</b>`:''}<br><span class="note">Заказ с Китая — предоплата 50%. Карго оплачивается отдельно, стоимость указывает продавец.</span></div>`:''}
+  <p style="margin:8px 0;font-size:14px">${esc(p.desc)}</p>
+  <p class="note">${CATS[p.cat]} · ${SEAS[p.season]}</p>
+  <div class="fee" style="margin-top:10px"><b>${p.inStock?'В наличии':p.china?'Заказать с Китая':'Нет в наличии'}</b>${p.china?'<br><span class="note">Товар привозим под заказ из Китая.</span>':''}</div>
+  <h3>Размер</h3>
+  <div class="row">${p.sizes.map(s=>{const q=p.qty&&p.qty[s],off=PS.src==='stock'&&q===0;return `<button class="opt ${PS.size===s?'on':''}" ${off?'disabled style="opacity:.4;text-decoration:line-through"':''} onclick="PS.size='${esc(s)}';paintProduct()">${esc(s)}${PS.src==='stock'&&q>0?' · '+q+' шт':''}</button>`}).join('')}</div>
+  ${PS.src==='china'?`<details open><summary style="cursor:pointer;font-weight:700;margin:8px 0">Таблица размеров (Китай)</summary>${sizeTables()}</details>`:''}
+  ${p.inStock||p.china?'<button class="btn full" style="margin-top:12px" onclick="addCart()">Добавить в корзину</button>':'<button class="btn full" disabled style="margin-top:12px;opacity:.5">Нет в наличии</button>'}
+  <h3>Отзывы (${cms.length})${cms.some(c=>c.r)?' · ★ '+(cms.reduce((a,c)=>a+(c.r||0),0)/cms.filter(c=>c.r).length).toFixed(1):''}</h3>
+  ${cms.map(c=>`<div class="cm"><b>${esc(c.name)}</b> ${c.r?'<span style="color:#f5a623">'+'★'.repeat(c.r)+'</span>':''} <span>${esc(c.date)}</span>${isAdmin?` <button class="btn sm red" onclick="delCm(${c.id})">Удалить</button>`:''}<div>${esc(c.text)}</div></div>`).join('') || '<p class="note">Пока нет комментариев.</p>'}
+  ${me?`<div class="field"><select id="cr" style="width:auto;margin-bottom:6px"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select><textarea id="ct" rows="2" maxlength="500" placeholder="Ваш комментарий"></textarea></div><button class="btn sm" onclick="addCm()">Отправить</button>`
+      :`<p class="note" style="margin-top:8px">Чтобы оставить комментарий, <button style="text-decoration:underline" onclick="openAuth()">войдите</button>.</p>`}`);
+}
+function addCart(){
+  if(!me) return needLogin();
+  if(PS.src==='out') return toast('Нет в наличии');
+  if(!PS.size){ toast('Выберите размер'); return }
+  const pp=products.find(x=>x.id===PS.id), q=pp.qty&&pp.qty[PS.size];
+  if(PS.src==='stock'&&q!=null){ const have=(cart.find(i=>i.pid===PS.id&&i.size===PS.size&&i.src==='stock')||{qty:0}).qty; if(have+1>q) return toast('Больше нет в наличии') }
+  const it = cart.find(i=>i.pid===PS.id&&i.size===PS.size&&i.src===PS.src);
+  it ? it.qty++ : cart.push({pid:PS.id,size:PS.size,src:PS.src,qty:1});
+  save('wsw_cart',cart); render(); toast('Добавлено в корзину'); closeM();
+}
+function addCm(){
+  const t = $('#ct').value.trim(); if(!t) return;
+  comments.push({id:Date.now(),pid:PS.id,name:me.name,text:t,r:Number($('#cr').value),date:new Date().toLocaleDateString('ru-RU')});
+  save('wsw_comments',comments); paintProduct();
+}
+function delCm(id){ comments = comments.filter(c=>c.id!==id); save('wsw_comments',comments); paintProduct() }
+
+/* ===== Корзина и заказ в WhatsApp ===== */
+function openCart(){
+  if(!me) return needLogin();
+  const rows = cart.map((i,n)=>{ const p=products.find(x=>x.id===i.pid); if(!p) return ''; return `
+   <div class="li"><div class="sm">${p.img?`<img src="${esc(p.img)}" alt="">`:NOPH}</div>
+   <div class="grow"><b>${esc(p.name)}</b><div class="note">Размер ${esc(i.size)} · ${i.src==='china'?'С Китая':'В наличии'}</div><div>${money(unit(p,i))}</div></div>
+   <div class="row" style="flex-wrap:nowrap;align-items:center"><button class="opt" onclick="qty(${n},-1)">−</button><b>${i.qty}</b><button class="opt" onclick="qty(${n},1)">+</button></div></div>`}).join('');
+  const total = cart.reduce((a,i)=>{const p=products.find(x=>x.id===i.pid);return a+(p?unit(p,i)*i.qty:0)},0);
+  modal(`<h2>Корзина</h2>${rows || '<p class="empty">Корзина пуста. Добавьте товары из каталога.</p>'}
+   ${cart.length?`<div class="pr" style="margin:12px 0;font-size:20px">Итого: ${money(total)}</div>
+   <div class="field"><label>Ваше имя</label><input id="on" value="${esc(me?me.name:'')}" placeholder="Как к вам обращаться"></div>
+   <div class="field"><label>Комментарий к заказу (необязательно)</label><input id="oc" placeholder="Адрес, пожелания"></div>
+   <div class="field"><label>Оплата</label><select id="op"><option value="phone">Через телефон</option><option value="cash">Наличными</option></select><p class="note">Банковские карты пока не поддерживаются. Для заказов из Китая — предоплата 50%.</p></div>
+   <div class="field"><label>Промокод (если есть)</label><input id="opm"></div>
+   <button class="btn wa full" onclick="checkout()">Заказать через WhatsApp</button>
+   <p class="note" style="margin-top:8px">Откроется WhatsApp с готовым сообщением — вам останется нажать «Отправить».</p>`:''}`);
+}
+function qty(n,d){ cart[n].qty+=d; if(cart[n].qty<1) cart.splice(n,1); save('wsw_cart',cart); render(); openCart() }
+function checkout(){
+  const name=($('#on').value||'').trim(); if(!name) return toast('Введите имя');
+  const pay=$('#op').value, c=($('#oc').value||'').trim(), pm=PROMO[($('#opm').value||'').trim().toUpperCase()]||0;
+  let total=0, cn=false; const items=[];
+  const lines=cart.map((i,n)=>{ const p=products.find(x=>x.id===i.pid); if(!p) return ''; const u=unit(p,i); total+=u*i.qty; if(i.src==='china') cn=true;
+    items.push({sid:p.sellerId||0,sn:p.sellerName||'',amt:p.price*i.qty});
+    return `${n+1}. ${p.name} — размер ${i.size} — ${i.src==='china'?'из Китая (товар '+p.price+' + карго '+(p.cargo!=null?p.cargo:'уточнить')+')':'в наличии'} — ${i.qty} шт × ${u} ${CUR}${p.sellerName?' (продавец: '+p.sellerName+')':''}` }).filter(Boolean);
+  const disc=Math.round(total*pm)/100; total-=disc;
+  const text=`Здравствуйте! Новый заказ West Side Wear\nИмя: ${name}\n${me.email?'Email: '+me.email+'\n':''}${me.phone?'Телефон: '+me.phone+'\n':''}\nТовары:\n${lines.join('\n')}\n\n${pm?'Промокод: -'+disc+' '+CUR+'\n':''}Итого: ${total} ${CUR}\nОплата: ${pay==='cash'?'НАЛИЧНЫМИ — прошу связаться со мной':'через телефон'}${cn?'\nЕсть товары из Китая: нужна предоплата 50%':''}${c?'\nКомментарий: '+c:''}`;
+  orders.unshift({id:Date.now(),date:new Date().toLocaleString('ru-RU'),name,total,text,items}); save('wsw_orders',orders);
+  openWA(text);
+}
+
+/* ===== Регистрация и вход ===== */
+function openAuth(tab){
+  if(me) return modal(`<h2>Здравствуйте, ${esc(me.name)}</h2><p class="note">${me.role==='seller'?'Продавец':'Покупатель'}${me.email?' · '+esc(me.email):''}${me.phone?' · '+esc(me.phone):''}</p>
+    ${me.role==='seller'?'<button class="btn full" style="margin-top:14px" onclick="openCabinet()">Кабинет продавца</button>':''}<button class="btn ghost full" style="margin-top:8px" onclick="openFavs()">Избранное</button><button class="btn ghost full" style="margin-top:8px" onclick="logout()">Выйти</button>`);
+  tab = tab || 'in';
+  modal(`<div class="tabs"><button class="opt ${tab==='in'?'on':''}" onclick="openAuth('in')">Вход</button><button class="opt ${tab==='up'?'on':''}" onclick="openAuth('up')">Регистрация</button></div>
+  ${tab==='in'?`
+   <div class="field"><label>Почта или номер телефона</label><input id="a1" autocomplete="username"></div>
+   <div class="field"><label>Пароль</label><input id="a2" type="password" autocomplete="current-password"></div>
+   <button class="btn full" onclick="login()">Войти</button>`:`
+   <div class="field"><label>Как к вам обращаться</label><input id="r1" autocomplete="name"></div>
+   <div class="field"><label>Электронная почта</label><input id="r2" type="email" autocomplete="email"></div>
+   <div class="field"><label>Номер телефона (необязательно, если указана почта)</label><input id="r3" type="tel" autocomplete="tel"></div>
+   <div class="field"><label>Пароль (от 6 символов)</label><input id="r4" type="password" autocomplete="new-password"></div>
+   <div class="field"><label>Кто вы</label><select id="r5" onchange="$('#fee').style.display=this.value==='seller'?'block':'none'"><option value="buyer">Покупатель</option><option value="seller">Продавец</option></select></div>
+   <div class="fee" id="fee" style="display:none"><b>Для продавцов:</b> с каждого товара, проданного через сайт, площадка берёт комиссию 10%. Вы получаете 90% цены.</div>
+   <details style="margin:8px 0"><summary class="note" style="cursor:pointer">Прочитать условия использования</summary>${termsHTML()}</details>
+   <label class="note" style="display:flex;gap:8px;align-items:flex-start;margin:8px 0 12px"><input type="checkbox" id="r6" style="width:auto;margin-top:3px"><span>Я прочитал(а) и принимаю условия использования<span id="fee2"></span></span></label>
+   <button class="btn full" onclick="register()">Создать аккаунт</button>`}`);
+}
+async function register(){
+  const name=$('#r1').value.trim(), email=$('#r2').value.trim().toLowerCase(), phone=$('#r3').value.trim(), pw=$('#r4').value, role=$('#r5').value;
+  if(!name) return toast('Введите имя');
+  if(!email && !phone) return toast('Укажите почту или номер');
+  if(email && !/^\S+@\S+\.\S+$/.test(email)) return toast('Проверьте почту');
+  if(pw.length<6) return toast('Пароль — минимум 6 символов');
+  if(!$('#r6').checked) return toast('Примите условия использования');
+  const u={id:Date.now(),name,email,phone,role,terms:new Date().toISOString(),date:new Date().toLocaleDateString('ru-RU')};
+  if(CLOUD()){
+    try{ const r=await auth('signup',{email:email||phone.replace(/\D/g,'')+'@wsw.phone',password:pw}); u.uid=r.user.id }
+    catch(e){ return toast('Не удалось создать аккаунт. Возможно, он уже есть') }
+  } else {
+    if(users.some(x=>(email&&x.email===email)||(phone&&x.phone===phone))) return toast('Такой аккаунт уже есть');
+    u.pw=await sha(pw); if(!u.pw) return;
+  }
+  users.push(u); save('wsw_users',users); me={id:u.id,uid:u.uid,name,email,phone,role}; save('wsw_me',me); render(); closeM(); toast('Добро пожаловать, '+name+'!');
+}
+async function login(){
+  const id=$('#a1').value.trim().toLowerCase(), pw=$('#a2').value, em=id.includes('@');
+  if(CLOUD()){
+    try{ const r=await auth('password',{email:em?id:id.replace(/\D/g,'')+'@wsw.phone',password:pw}); await pull();
+      const u=users.find(x=>x.uid===r.user.id); if(!u) return toast('Профиль не найден');
+      me={id:u.id,uid:u.uid,name:u.name,role:u.role,email:em?id:'',phone:em?'':id}; save('wsw_me',me); render(); closeM(); toast('Вы вошли');
+    }catch(e){ toast('Неверные данные для входа') } return }
+  const h=await sha(pw); if(!h) return;
+  const u=users.find(u=>(u.email===id||u.phone===id)&&u.pw===h);
+  if(!u) return toast('Неверные данные для входа');
+  me={id:u.id,name:u.name,email:u.email,phone:u.phone,role:u.role}; save('wsw_me',me); render(); closeM(); toast('Вы вошли');
+}
+function logout(){ me=null; sess=null; localStorage.removeItem('wsw_me'); localStorage.removeItem('wsw_sess'); render(); closeM() }
+
+/* ===== Поддержка и связь ===== */
+function openSupport(){ modal(`<h2>Поддержка</h2>
+  <p style="font-size:14px">Поможем с выбором размера, статусом заказа и оплатой. Обычно отвечаем в течение дня.</p>
+  <h3>Частые вопросы</h3>
+  <details class="cm"><summary><b>Сколько идёт заказ из Китая?</b></summary><p>Сроки зависят от товара — уточните у нас в WhatsApp при оформлении.</p></details>
+  <details class="cm"><summary><b>Как выбрать размер?</b></summary><p>Откройте «Таблицу размеров». Китайские размеры меньше наших.</p></details>
+  <details class="cm"><summary><b>Как оформить заказ?</b></summary><p>Добавьте товары в корзину и нажмите «Заказать через WhatsApp» — останется отправить сообщение.</p></details>
+  <button class="btn full" style="margin-top:12px" onclick="openBot()">Спросить бота-помощника</button>
+  <button class="btn wa full" style="margin-top:8px" onclick="openWA('Здравствуйте! Мне нужна помощь по сайту West Side Wear.')">Написать в поддержку (WhatsApp)</button>`) }
+function openContacts(){ modal(`<h2>Связь</h2>
+  <div class="row" style="flex-direction:column">
+   <button class="btn wa" onclick="openWA('Здравствуйте! Хочу связаться с West Side Wear.')">WhatsApp</button>
+   <a class="btn" href="${TG}" target="_blank" rel="noopener">Telegram: @westsidewear</a>
+   <a class="btn ghost" href="${TT}" target="_blank" rel="noopener">TikTok: @westsidewear.tm</a></div>`) }
+
+/* ===== Админка ===== */
+function openAdmin(){
+  if(isAdmin) return adminPanel('products');
+  modal(`<h2>Вход для администратора</h2><div class="field"><label>Пароль</label><input id="ap" type="password" autocomplete="current-password"></div><label class="note" style="display:flex;gap:6px;align-items:center;margin-bottom:10px"><input type="checkbox" style="width:auto" onchange="$('#ap').type=this.checked?'text':'password'"> Показать пароль</label><button class="btn full" onclick="adminLogin()">Войти</button>`);
+}
+async function adminLogin(){
+  const h = await sha($('#ap').value); if(!h) return;
+  if(h===ADMIN_HASH){ isAdmin=true; sessionStorage.setItem('wsw_admin','1'); adminPanel('products') } else toast('Неверный пароль');
+}
+function adminPanel(tab){
+  const T = (k,v)=>`<button class="opt ${tab===k?'on':''}" onclick="adminPanel('${k}')">${v}</button>`;
+  let body = '';
+  if(tab==='products') body = `
+   <h3>Добавить товар</h3>
+   ${productForm(false)}
+   <h3>Товары (${products.length})</h3>
+   ${products.map(p=>`<div class="ad-item"><div class="grow"><b>${esc(p.name)}</b><div class="note">${CATS[p.cat]} · ${SEAS[p.season]} · ${money(p.price)}${p.sellerName?' · продавец '+esc(p.sellerName):''}</div></div>
+     <button class="btn sm ghost" onclick="editProduct(${p.id},'admin')">Изменить</button><button class="btn sm red" onclick="delProduct(${p.id})">Удалить</button></div>`).join('')}`;
+  if(tab==='orders') body = acct()+`<h3>Заказы (${orders.length})</h3>`+(orders.map(o=>`<div class="cm"><b>${esc(o.name)}</b> — ${money(o.total)} <span>${esc(o.date)}</span><pre style="white-space:pre-wrap;font:inherit;font-size:13px;color:#555">${esc(o.text)}</pre></div>`).join('')||'<p class="note">Заказов пока нет.</p>');
+  if(tab==='users') body = `<h3>Пользователи (${users.length})</h3>`+(users.map(u=>`<div class="ad-item"><div class="grow"><b>${esc(u.name)}</b> · ${u.role==='seller'?'продавец':'покупатель'}<div class="note">${esc(u.email)} ${esc(u.phone)} · ${esc(u.date)}</div></div>${u.role==='seller'?`<button class="btn sm ghost" onclick="verUser(${u.id})">${u.verified?'✓ Проверен':'Проверить'}</button>`:''}<button class="btn sm red" onclick="delUser(${u.id})">Удалить</button></div>`).join('')||'<p class="note">Пока никого.</p>');
+  if(tab==='data') body = `<h3>Резервная копия</h3><p class="note">Данные хранятся в браузере. Сохраняйте копию регулярно.</p>
+   <button class="btn full" onclick="exportData()">Скачать копию</button>
+   <div class="field" style="margin-top:10px"><label>Восстановить из файла</label><input type="file" accept=".json" onchange="importData(event)"></div>
+   <button class="btn ghost full" style="margin-top:10px" onclick="adminLogout()">Выйти из админки</button>`;
+  modal(`<h2>Админ-панель</h2><div class="tabs">${T('products','Товары')}${T('orders','Заказы')}${T('users','Люди')}${T('data','Данные')}</div>${body}`);
+}
+function resize(file){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>{ const im=new Image(); im.onload=()=>{ const m=600,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas'); c.width=im.width*k; c.height=im.height*k; c.getContext('2d').drawImage(im,0,0,c.width,c.height); res(c.toDataURL('image/jpeg',.7)) }; im.src=r.result }; r.readAsDataURL(file) }) }
+function togStock(id){ const p=products.find(x=>x.id===id); p.inStock=!p.inStock; if(!p.inStock&&!p.china) p.china=true; save('wsw_products',products); render(); adminPanel('products') }
+function delProduct(id){ if(!confirm('Удалить товар?')) return; products=products.filter(p=>p.id!==id); save('wsw_products',products); render(); adminPanel('products') }
+function delUser(id){ if(!confirm('Удалить пользователя?')) return; users=users.filter(u=>u.id!==id); save('wsw_users',users); adminPanel('users') }
+function adminLogout(){ isAdmin=false; sessionStorage.removeItem('wsw_admin'); closeM() }
+function exportData(){ const b=new Blob([JSON.stringify({products,users,comments,orders})],{type:'application/json'}), a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='westsidewear-backup.json'; a.click() }
+function importData(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); products=d.products||products; users=d.users||users; comments=d.comments||comments; orders=d.orders||orders; save('wsw_products',products); save('wsw_users',users); save('wsw_comments',comments); save('wsw_orders',orders); render(); toast('Данные восстановлены') }catch(x){ toast('Файл повреждён') } }; r.readAsText(f) }
+
+/* ===== Избранное и подписки ===== */
+const FEE = 0.10; // комиссия площадки 10%
+const liked = id => !!me && (likes[id]||[]).includes(me.id);
+const isFollowing = sid => !!me && (follows[sid]||[]).includes(me.id);
+function needLogin(){ toast('Войдите или зарегистрируйтесь, чтобы продолжить'); openAuth() }
+function toggleLike(id, inModal){
+  if(!me) return needLogin();
+  const a = likes[id]||[]; likes[id] = a.includes(me.id) ? a.filter(x=>x!==me.id) : [...a, me.id];
+  save('wsw_likes',likes); render(); if(inModal) paintProduct();
+}
+function toggleFollow(sid){
+  if(!me) return needLogin();
+  if(String(me.id)===String(sid)) return toast('Это ваш аккаунт');
+  const a = follows[sid]||[]; follows[sid] = a.includes(me.id) ? a.filter(x=>x!==me.id) : [...a, me.id];
+  save('wsw_follows',follows); $('#sellerpg')?openSeller(Number(sid)):paintProduct();
+}
+function openFavs(){
+  if(!me) return needLogin();
+  const list = products.filter(p=>liked(p.id));
+  modal(`<h2>Избранное</h2>`+(list.map(p=>`<div class="li" style="cursor:pointer" onclick="openProduct(${p.id})"><div class="sm">${p.img?`<img src="${esc(p.img)}" alt="">`:NOPH}</div><div class="grow"><b>${esc(p.name)}</b><div>${money(p.price)}</div></div></div>`).join('') || '<p class="empty">Нажмите ♡ на товаре, чтобы сохранить его здесь.</p>'));
+}
+
+/* ===== Форма товара (админ и продавец) ===== */
+function productForm(seller, e){
+  e = e || {}; const v = x => esc(x==null?'':x);
+  const sz = e.sizes ? e.sizes.map(z=>e.qty&&e.qty[z]!=null?z+':'+e.qty[z]:z).join(', ') : '';
+  const mode = e.id ? (e.inStock?'stock':e.china?'china':'out') : 'stock';
+  return `
+   <div class="up" id="upg"><label class="upb" for="n10"><span>+</span><small>Добавить фото<br>до 10 штук</small></label><input id="n10" type="file" accept="image/*" multiple hidden onchange="prevPhotos(this)">${(e.imgs||[]).map(u=>`<img class="th" src="${esc(u)}" alt="">`).join('')}</div>
+   <div class="field"><input id="n1" placeholder="Название" value="${v(e.name)}"></div>
+   <div class="field"><input id="n2" type="number" min="0" placeholder="Цена, ${CUR}" value="${v(e.price)}" ${seller?'oninput="updNet()"':''}></div>
+   ${seller?'<div class="fee" id="net">Комиссия площадки — 10%. Укажите цену — мы покажем, сколько вы получите.</div>':''}
+   <div class="field"><input id="n11" type="number" min="0" placeholder="Карго за 1 шт, ${CUR} (для заказа с Китая)" value="${v(e.cargo)}"></div>
+   <div class="row"><select id="n3" style="flex:1">${Object.entries(CATS).map(([k,t])=>`<option value="${k}" ${e.cat===k?'selected':''}>${t}</option>`).join('')}</select>
+   <select id="n4" style="flex:1">${Object.entries(SEAS).map(([k,t])=>`<option value="${k}" ${e.season===k?'selected':''}>${t}</option>`).join('')}</select></div>
+   <div class="field"><label>Статус товара</label><select id="n5"><option value="stock" ${mode==='stock'?'selected':''}>В наличии</option><option value="china" ${mode==='china'?'selected':''}>Заказать с Китая</option><option value="out" ${mode==='out'?'selected':''}>Нет в наличии</option></select></div>
+   <div class="field"><input id="n7" placeholder="Размеры и количество: S:3, M:5, L:2 (без цифры — без учёта)" value="${v(sz)}"></div>
+   <div class="field"><textarea id="n9" rows="2" placeholder="Описание">${v(e.desc)}</textarea></div>
+   ${e.id?'<p class="note" style="margin-bottom:10px">Выберите новые фото, чтобы заменить старые.</p>':''}
+   <button class="btn full" onclick="addProduct('${seller?'seller':'admin'}'${e.id?','+e.id:''})">${e.id?'Сохранить':'Опубликовать'}</button>` }
+function prevPhotos(inp){ const g=$('#upg'); g.querySelectorAll('.th').forEach(x=>x.remove()); if(inp.files.length>10) toast('Максимум 10 фото');
+  [...inp.files].slice(0,10).forEach(f=>{ const i=document.createElement('img'); i.className='th'; i.alt=''; i.src=URL.createObjectURL(f); g.appendChild(i) }) }
+function editProduct(id, owner){ const p=products.find(x=>x.id===id); if(!p) return; modal(`<h2>Изменить товар</h2>${productForm(owner==='seller',p)}`); if(owner==='seller') updNet() }
+function updNet(){ const v=Number($('#n2').value)||0, r=x=>Math.round(x*100)/100;
+  $('#net').innerHTML = v ? `Вы получите <b>${money(r(v*(1-FEE)))}</b>. Комиссия площадки 10% — ${money(r(v*FEE))}.` : 'Комиссия площадки — 10%. Укажите цену — мы покажем, сколько вы получите.' }
+async function addProduct(owner, editId){
+  const name=$('#n1').value.trim(), price=Number($('#n2').value), sizes=[], qty={};
+  $('#n7').value.split(',').map(t=>t.trim()).filter(Boolean).forEach(t=>{const [a,b]=t.split(':').map(x=>x.trim()); sizes.push(a); if(b&&!isNaN(b)) qty[a]=Number(b)});
+  if(!name||!price||!sizes.length) return toast('Заполните название, цену и размеры');
+  const fl=[...$('#n10').files]; if(fl.length>10) return toast('Максимум 10 фото');
+  const imgs=await Promise.all(fl.map(resize)), st=$('#n5').value;
+  const f={name,price,cat:$('#n3').value,season:$('#n4').value,inStock:st==='stock',china:st==='china',sizes,qty,cargo:$('#n11').value===''?null:Number($('#n11').value),desc:$('#n9').value.trim()};
+  if(editId){
+    const q=products.find(x=>x.id===editId); if(!q||(owner==='seller'&&q.sellerId!==(me&&me.id))) return;
+    Object.assign(q,f); if(imgs.length){ q.imgs=imgs; q.img=imgs[0] }
+    if(save('wsw_products',products)){ render(); owner==='seller'?openCabinet():adminPanel('products'); toast('Сохранено') } return }
+  const p={id:Date.now(),...f,img:imgs[0]||'',imgs};
+  if(owner==='seller'){ if(!me||me.role!=='seller') return; p.sellerId=me.id; p.sellerName=me.name }
+  products.unshift(p);
+  if(save('wsw_products',products)){ render(); owner==='seller'?openCabinet():adminPanel('products'); toast('Товар опубликован') } else products.shift();
+}
+
+/* ===== Кабинет продавца ===== */
+function openCabinet(){
+  if(!me||me.role!=='seller') return;
+  const mine = products.filter(p=>p.sellerId===me.id), r=x=>Math.round(x*100)/100;
+  const nl = mine.reduce((a,p)=>a+(likes[p.id]||[]).length,0), nf = (follows[me.id]||[]).length;
+  modal(`<h2>Кабинет продавца</h2>
+  <div class="stats"><div class="stat"><b>${mine.length}</b><span>Опубликовано</span></div><div class="stat"><b>${nf}</b><span>Подписчики</span></div><div class="stat"><b>${nl}</b><span>Лайки</span></div></div>
+  <div class="fee">Комиссия площадки — 10% с каждого проданного товара. Вам достаётся 90% цены.</div>
+  <button class="btn full" onclick="sellerForm()">Опубликовать товар</button>
+  <h3>Мои товары</h3>`+(mine.map(p=>`<div class="ad-item"><div class="grow"><b>${esc(p.name)}</b><div class="note">${money(p.price)} · вам ${money(r(p.price*(1-FEE)))} · ♥ ${(likes[p.id]||[]).length}</div></div><button class="btn sm ghost" onclick="editProduct(${p.id},'seller')">Изменить</button><button class="btn sm red" onclick="sellerDel(${p.id})">Удалить</button></div>`).join('') || '<p class="note">Вы пока ничего не публиковали.</p>'));
+}
+function sellerForm(){ modal(`<h2>Новый товар</h2>${productForm(true)}`) }
+function sellerTog(id){ const p=products.find(x=>x.id===id&&x.sellerId===me.id); if(!p) return; p.inStock=!p.inStock; if(!p.inStock&&!p.china) p.china=true; save('wsw_products',products); render(); openCabinet() }
+function sellerDel(id){ if(!confirm('Удалить товар?')) return; products=products.filter(p=>!(p.id===id&&p.sellerId===me.id)); save('wsw_products',products); render(); openCabinet() }
+
+/* ===== Условия использования ===== */
+function termsHTML(){ return `<div style="font-size:13px;line-height:1.55;max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:6px">
+<p class="note">Редакция от 17.11.2026</p>
+<h3>1. Общие положения</h3><p>West Side Wear — онлайн-площадка по продаже одежды: товары в наличии и товары под заказ из Китая. Регистрируясь и пользуясь сайтом, вы подтверждаете, что прочитали эти условия и согласны с ними.</p>
+<h3>2. Аккаунт</h3><p>Вы указываете достоверные данные и отвечаете за сохранность пароля. Один человек — один аккаунт. Администрация вправе заблокировать аккаунт при нарушении условий.</p>
+<h3>3. Покупатели и заказы</h3><p>Заказ оформляется через сообщение в WhatsApp и считается принятым после подтверждения администрацией. Цена, наличие и сроки могут измениться до подтверждения. Китайские размеры меньше привычных — таблица размеров носит справочный характер, выбор размера остаётся за покупателем. Сроки доставки из Китая ориентировочные.</p>
+<h3>4. Продавцы и комиссия</h3><p>Продавец публикует только те товары, которые вправе продавать, и отвечает за достоверность описания, фото, цены и наличия. Запрещены подделки, товары, ограниченные законом, и вводящая в заблуждение информация. За каждый товар, проданный через сайт, площадка удерживает комиссию 10% от его цены; продавцу причитается 90%. Порядок и сроки расчётов согласуются с администрацией. Администрация вправе снять товар с публикации.</p>
+<h3>5. Комментарии</h3><p>Запрещены оскорбления, спам, реклама сторонних ресурсов и ложные отзывы. Администрация вправе удалять такие комментарии.</p>
+<h3>6. Персональные данные</h3><p>Имя, почта и номер телефона (номер необязателен) используются только для работы аккаунта, обработки заказов и связи с вами. Мы не передаём их третьим лицам, кроме случаев, предусмотренных законом.</p>
+<h3>7. Ответственность</h3><p>Сайт предоставляется «как есть». В пределах, допустимых законом, администрация не отвечает за перебои в работе и за информацию, размещённую продавцами.</p>
+<h3>8. Изменения и связь</h3><p>Условия могут обновляться; актуальная редакция всегда на сайте. Вопросы — через раздел «Связь» или Telegram @westsidewear.</p></div>` }
+function openTerms(){ modal(`<h2>Условия использования</h2>${termsHTML().replace('max-height:300px;','')}`) }
+
+/* ===== Дополнения ===== */
+const PROMO = {WEST10:10};
+const unit = (p,i) => p.price + (i.src==='china' ? (p.cargo||0) : 0);
+const sellerVer = id => !!(users.find(u=>u.id===id)||{}).verified;
+function verUser(id){ const u=users.find(x=>x.id===id); u.verified=!u.verified;
+  if(CLOUD()) api(u.verified?'/rest/v1/kv?on_conflict=tbl,id':`/rest/v1/kv?tbl=eq.ver&id=eq.${id}`,u.verified?{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({tbl:'ver',id:String(id),data:{id}})}:{method:'DELETE'}).catch(()=>toast('Нужен вход с аккаунта администратора'));
+  else save('wsw_users',users);
+  adminPanel('users') }
+function acct(){ const sm={}; orders.forEach(o=>(o.items||[]).forEach(it=>{ if(it.sid) sm[it.sn]=(sm[it.sn]||0)+it.amt }));
+  const k=Object.keys(sm); return k.length ? '<h3>Расчёты с продавцами (по заказам)</h3>'+k.map(n=>`<div class="ad-item"><div class="grow"><b>${esc(n)}</b><div class="note">Продано на ${money(sm[n])} · комиссия 10%: ${money(Math.round(sm[n]*10)/100)} · продавцу: ${money(Math.round(sm[n]*90)/100)}</div></div></div>`).join('') : '' }
+function sellerQty(id){ const p=products.find(x=>x.id===id&&x.sellerId===me.id); if(!p) return;
+  const v=prompt('Размеры и количество (S:3, M:5)', p.sizes.map(s=>p.qty&&p.qty[s]!=null?s+':'+p.qty[s]:s).join(', ')); if(v===null) return;
+  p.sizes=[]; p.qty={}; v.split(',').map(t=>t.trim()).filter(Boolean).forEach(t=>{const [a,b]=t.split(':').map(x=>x.trim()); p.sizes.push(a); if(b&&!isNaN(b)) p.qty[a]=Number(b)});
+  save('wsw_products',products); openCabinet() }
+function openSeller(id){
+  const list=products.filter(p=>p.sellerId===id), n=(list[0]||{}).sellerName||'Продавец';
+  modal(`<div id="sellerpg"><h2>${esc(n)}${sellerVer(id)?' ✓':''}</h2><p class="note">Подписчиков: ${(follows[id]||[]).length} · товаров: ${list.length}${sellerVer(id)?' · проверенный продавец':''}</p>
+  <button class="btn full" style="margin:10px 0" onclick="toggleFollow('${id}')">${isFollowing(id)?'Вы подписаны':'Подписаться'}</button><div class="grid">`+
+  list.map(p=>`<div class="card" onclick="openProduct(${p.id})"><div class="ph">${p.img?`<img src="${esc(p.img)}" alt="">`:NOPH}</div><div class="info"><div class="nm">${esc(p.name)}</div><div class="pr">${money(p.price)}</div></div></div>`).join('')+'</div></div>') }
+function shareP(id){ const p=products.find(x=>x.id===id), u=location.href.split('#')[0]+'#p'+id, t=p.name+' — West Side Wear';
+  if(navigator.share) navigator.share({title:t,url:u}).catch(()=>{}); else window.open('https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent(t),'_blank','noopener') }
+const PAGES = {
+ about:()=>`<h2>О нас</h2><p style="font-size:14px">West Side Wear — новый молодёжный маркетплейс одежды в Туркменистане. Мы делаем сайт для подростков и людей любого возраста, которым важен свой стиль: мужская, женская и детская одежда — в наличии и под заказ из Китая.</p>
+  <h3>Поиск по фото</h3><p style="font-size:14px">Увидели вещь в соцсетях? Пришлите фото продавцу — он подберёт такой же или похожий товар.</p>
+  <button class="btn wa full" onclick="openWA('Здравствуйте! Хочу найти вещь по фото.')">Прислать фото в WhatsApp</button>`,
+ pay:()=>`<h2>Оплата и возврат</h2><h3>Способы оплаты</h3><p style="font-size:14px">Через телефон или наличными. Банковские карты пока не поддерживаются.</p>
+  <h3>Заказ с Китая</h3><p style="font-size:14px">Предоплата 50%. Карго оплачивается отдельно: цену товара и стоимость карго указывает продавец, итог вы видите до заказа. Если выбрали наличные, мы свяжемся с вами и сообщим детали.</p>
+  <h3>Возврат и обмен</h3><p style="font-size:14px">Если товар пришёл повреждённым, деформированным или не соответствует описанию — возвращаем вам предоплату 50% и забираем товар.</p><p style="font-size:14px;margin-top:8px">Если не подошёл размер или товар просто не понравился — предоплата 50% не возвращается, потому что товар уже выкуплен и доставлен. Мы предложим на выбор: вернуть 40% или заменить товар на другой.</p>`,
+ ads:()=>`<h2>Реклама и сотрудничество</h2><p style="font-size:14px">Хотите показать рекламу на сайте, стать партнёром или продавцом? Напишите нам — обсудим формат и стоимость.</p>
+  <button class="btn wa full" onclick="openWA('Здравствуйте! Хочу обсудить рекламу или сотрудничество с West Side Wear.')">Написать в WhatsApp</button>
+  <a class="btn ghost full" style="margin-top:8px" href="${TG}" target="_blank" rel="noopener">Telegram: @westsidewear</a>`
+};
+function openPage(k){ modal(PAGES[k]()) }
+
+/* ===== Бот-помощник (ответы по ключевым словам, бесплатно) ===== */
+const BOT = [
+ {k:['размер','таблиц','маломер','мерк'],a:'Китайские размеры меньше наших. Откройте «Таблицу размеров» в подвале сайта. Если сомневаетесь между двумя размерами — берите больший или спросите нас в WhatsApp.'},
+ {k:['оплат','карт','наличн','телефон','предоплат','платить'],a:'Оплата через телефон или наличными, банковские карты пока не поддерживаются. Для заказа с Китая нужна предоплата 50%.'},
+ {k:['карго','доставк','срок','когда придёт','когда придет','сколько идёт','сколько идет'],a:'Карго оплачивается отдельно, его стоимость указывает продавец в карточке товара — итог вы видите до заказа. Точные сроки уточняйте в WhatsApp.'},
+ {k:['возврат','обмен','вернуть','брак','порван','деформ'],a:'Если товар пришёл повреждённым, деформированным или не таким, как в описании — вернём предоплату 50% и заберём товар. Если не подошёл размер — предоплата не возвращается, но можно вернуть 40% или заменить товар на другой.'},
+ {k:['заказ','оформ','купить','корзин'],a:'Войдите в аккаунт, добавьте товар в корзину и нажмите «Заказать через WhatsApp». Откроется готовое сообщение — останется нажать «Отправить».'},
+ {k:['регистр','аккаунт','войти','вход','пароль'],a:'Нажмите «Войти» вверху → «Регистрация». Нужна почта или номер, имя и пароль от 6 символов.'},
+ {k:['продав','комисс','опубликов','10%','выложить'],a:'Зарегистрируйтесь с ролью «Продавец» — появится «Кабинет продавца». Комиссия площадки — 10% с проданного товара.'},
+ {k:['реклам','сотруднич','партн'],a:'Напишите нам в WhatsApp или Telegram — раздел «Реклама и сотрудничество» в подвале сайта.'},
+ {k:['фото','найти','подобрать','похож'],a:'Пришлите фото продавцу в WhatsApp — он подберёт такой же или похожий товар.'},
+ {k:['промокод','скидк','купон'],a:'Промокод вводится в корзине перед заказом.'}
+];
+function openBot(){
+  modal(`<h2>Бот-помощник</h2><div id="bm"></div><div class="row">${['Размеры','Оплата','Карго','Возврат','Как заказать'].map(t=>`<button class="chip" onclick="botSend('${t}')">${t}</button>`).join('')}</div>
+  <div class="row" style="flex-wrap:nowrap"><input id="bi" placeholder="Напишите вопрос" onkeydown="if(event.key==='Enter')botSend()"><button class="btn" onclick="botSend()">→</button></div>`);
+  botSay('Привет! Я помогу с размерами, оплатой, карго, возвратом и заказом. Выберите тему или напишите вопрос.') }
+function botSay(t){ const d=document.createElement('div'); d.className='bub bot'; d.textContent=t; $('#bm').appendChild(d); $('#bm').scrollTop=1e5 }
+function botSend(t){
+  const i=$('#bi'); t=t||i.value.trim(); if(!t) return; i.value='';
+  const m=document.createElement('div'); m.className='bub me'; m.textContent=t; $('#bm').appendChild(m);
+  const q=t.toLowerCase(); let best=null, bs=0; BOT.forEach(b=>{ const n=b.k.filter(k=>q.includes(k)).length; if(n>bs){ bs=n; best=b } });
+  setTimeout(()=>{
+    if(best) botSay(best.a);
+    else { botSay('Не нашёл точный ответ. Напишите нам в WhatsApp — поможем.'); const b=document.createElement('button'); b.className='btn wa sm'; b.textContent='Открыть WhatsApp'; b.onclick=()=>openWA('Здравствуйте! Вопрос: '+t); $('#bm').appendChild(b) }
+    $('#bm').scrollTop=1e5 },350) }
+
+/* ===== Язык, приветствие ===== */
+function applyLang(l){ lang=l; localStorage.setItem('wsw_lang',l); const d=D[l]; Object.assign(CATS,d.cats); Object.assign(SEAS,d.seas);
+  $('#q').placeholder=d.q; $('#h1').textContent=d.h1; $('#hp').textContent=d.hp; $('#cartb').firstChild.nodeValue=d.cart; $('#lsel').value=l;
+  if($('#isub')){ $('#isub').textContent=d.sub; $('#igo').textContent=d.go } render() }
+function enterSite(reg){ localStorage.setItem('wsw_intro','1'); const i=$('#intro'); i.classList.add('out'); setTimeout(()=>i.remove(),700); if(reg&&!me) openAuth('up') }
+$('#lg').innerHTML=['West Side','Wear'].map((w,li)=>'<div>'+[...w].map((ch,i)=>`<span style="animation-delay:${(i+li*9)*.05}s${li?';color:var(--acc)':''}">${ch===' '?'&nbsp;':ch}</span>`).join('')+'</div>').join('');
+applyLang(lang);
+if(CLOUD()){ if(me&&!sess) me=null; (sess?refresh():Promise.resolve()).then(pull) }
+if(/^#p\d+$/.test(location.hash)) openProduct(+location.hash.slice(2));
+</script>
+</body>
+</html>
