@@ -6,8 +6,6 @@
 <title>West Side Wear — маркетплейс одежды</title>
 <meta name="description" content="West Side Wear — молодёжный маркетплейс одежды в Туркменистане. В наличии и под заказ из Китая.">
 <meta property="og:title" content="West Side Wear"><meta property="og:description" content="Молодёжный маркетплейс одежды: мужская, женская, детская."><meta name="theme-color" content="#111">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Ctext x='32' y='46' font-size='38' font-weight='900' text-anchor='middle' fill='%23fff' font-family='Arial'%3EW%3C/text%3E%3Crect x='16' y='50' width='32' height='3' fill='%2300c2c2'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="logo.png">
 <meta property="og:image" content="logo.png"><meta property="og:type" content="website">
@@ -243,7 +241,8 @@ function recsOf(t, v){
   if(Array.isArray(v)) return Object.fromEntries(v.map(x=>[String(x.id), t==='users' ? {id:x.id,uid:x.uid,name:x.name,role:x.role,date:x.date} : x]));
   const o={}; for(const k in v) v[k].forEach(u=>o[k+'_'+u]={k,u}); return o }
 function cloudSync(k, v){
-  const t = k.replace('wsw_',''); if(!CLOUD()||!sess||!SYNC.includes(t)) return;
+  const t = k.replace('wsw_',''); if(!CLOUD()||!SYNC.includes(t)) return;
+  if(!sess){ toast('Войдите в аккаунт, иначе данные не сохранятся в базе'); return }
   const recs=recsOf(t,v), old=SNAP[t]||{}, up=[];
   for(const id in recs) if(JSON.stringify(recs[id])!==JSON.stringify(old[id])) up.push({tbl:t,id,data:recs[id]});
   const del=Object.keys(old).filter(id=>!(id in recs)); SNAP[t]=JSON.parse(JSON.stringify(recs));
@@ -251,7 +250,8 @@ function cloudSync(k, v){
   del.forEach(id=>api(`/rest/v1/kv?tbl=eq.${t}&id=eq.${encodeURIComponent(id)}`,{method:'DELETE'}).catch(()=>{}));
 }
 async function api(path, opt={}, again){
-  const r = await fetch(SB_URL+path,{...opt,headers:{apikey:SB_KEY,...(sess?{Authorization:'Bearer '+sess.token}:(SB_KEY.startsWith('sb_')?{}:{Authorization:'Bearer '+SB_KEY})),'Content-Type':'application/json',...(opt.headers||{})}});
+  const ac=new AbortController(), tm=setTimeout(()=>ac.abort(),12000); let r;
+  try{ r = await fetch(SB_URL+path,{...opt,signal:ac.signal,headers:{apikey:SB_KEY,...(sess?{Authorization:'Bearer '+sess.token}:(SB_KEY.startsWith('sb_')?{}:{Authorization:'Bearer '+SB_KEY})),'Content-Type':'application/json',...(opt.headers||{})}}) } finally { clearTimeout(tm) }
   if(r.status===401 && sess && !again && await refresh()) return api(path,opt,1);
   if(!r.ok) throw new Error(await r.text());
   return r.status===204 ? null : r.json().catch(()=>null) }
@@ -272,7 +272,7 @@ async function pull(){
     SYNC.forEach(t=>SNAP[t]=recsOf(t,t==='likes'?likes:t==='follows'?follows:{products,users,comments,orders}[t]));
     users.forEach(u=>u.verified=vs.has(String(u.id))); render();
     if(/^#p\d+$/.test(location.hash)) openProduct(+location.hash.slice(2));
-  }catch(e){ toast('Не удалось загрузить данные') } }
+  }catch(e){ toast('Нет связи с базой: '+String(e.message).slice(0,80)) } }
 const money = n => Number(n).toLocaleString('ru-RU') + ' ' + CUR;
 const NOPH = '<span class="noph">Нет фото</span>';
 let tt; function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',2600)}
@@ -429,6 +429,7 @@ function openAuth(tab){
   ${tab==='in'?`
    <div class="field"><label>Почта или номер телефона</label><input id="a1" autocomplete="username"></div>
    <div class="field"><label>Пароль</label><input id="a2" type="password" autocomplete="current-password"></div>
+   <div style="text-align:right;margin:-2px 0 12px"><button class="note" style="text-decoration:underline" onclick="forgot()">Забыли пароль?</button></div>
    <button class="btn full" onclick="login()">Войти</button>`:`
    <div class="field"><label>Как к вам обращаться</label><input id="r1" autocomplete="name"></div>
    <div class="field"><label>Электронная почта</label><input id="r2" type="email" autocomplete="email"></div>
@@ -493,7 +494,7 @@ function openAdmin(){
 }
 async function adminLogin(){
   const h = await sha($('#ap').value); if(!h) return;
-  if(h===ADMIN_HASH){ isAdmin=true; sessionStorage.setItem('wsw_admin','1'); adminPanel('products') } else toast('Неверный пароль');
+  if(h===ADMIN_HASH){ isAdmin=true; sessionStorage.setItem('wsw_admin','1'); adminPanel('products'); if(CLOUD()&&!sess) toast('Войдите в аккаунт владельца, иначе товары не сохранятся в базе') } else toast('Неверный пароль');
 }
 function adminPanel(tab){
   const T = (k,v)=>`<button class="opt ${tab===k?'on':''}" onclick="adminPanel('${k}')">${v}</button>`;
@@ -505,8 +506,8 @@ function adminPanel(tab){
    ${products.map(p=>`<div class="ad-item"><div class="grow"><b>${esc(p.name)}</b><div class="note">${CATS[p.cat]} · ${SEAS[p.season]} · ${money(p.price)}${p.sellerName?' · продавец '+esc(p.sellerName):''}</div></div>
      <button class="btn sm ghost" onclick="editProduct(${p.id},'admin')">Изменить</button><button class="btn sm red" onclick="delProduct(${p.id})">Удалить</button></div>`).join('')}`;
   if(tab==='orders') body = acct()+`<h3>Заказы (${orders.length})</h3>`+(orders.map(o=>`<div class="cm"><b>${esc(o.name)}</b> — ${money(o.total)} <span>${esc(o.date)}</span><pre style="white-space:pre-wrap;font:inherit;font-size:13px;color:#555">${esc(o.text)}</pre></div>`).join('')||'<p class="note">Заказов пока нет.</p>');
-  if(tab==='users') body = `<h3>Пользователи (${users.length})</h3>`+(users.map(u=>`<div class="ad-item"><div class="grow"><b>${esc(u.name)}</b> · ${u.role==='seller'?'продавец':'покупатель'}<div class="note">${esc(u.email)} ${esc(u.phone)} · ${esc(u.date)}</div></div>${u.role==='seller'?`<button class="btn sm ghost" onclick="verUser(${u.id})">${u.verified?'✓ Проверен':'Проверить'}</button>`:''}<button class="btn sm red" onclick="delUser(${u.id})">Удалить</button></div>`).join('')||'<p class="note">Пока никого.</p>');
-  if(tab==='data') body = `<h3>Резервная копия</h3><p class="note">Данные хранятся в браузере. Сохраняйте копию регулярно.</p>
+  if(tab==='users') body = `<h3>Пользователи (${users.length}) · продавцов: ${users.filter(u=>u.role==='seller').length}</h3><button class="btn sm ghost" onclick="pull().then(()=>adminPanel('users'))">Обновить</button>`+(users.map(u=>`<div class="ad-item"><div class="grow"><b>${esc(u.name)}</b> · ${u.role==='seller'?'продавец':'покупатель'}<div class="note">${esc(u.email)} ${esc(u.phone)} · ${esc(u.date)}</div></div>${u.role==='seller'?`<button class="btn sm ghost" onclick="verUser(${u.id})">${u.verified?'✓ Проверен':'Проверить'}</button>`:''}<button class="btn sm red" onclick="delUser(${u.id})">Удалить</button></div>`).join('')||'<p class="note">Пока никого.</p>');
+  if(tab==='data') body = `<h3>Проверка базы</h3><button class="btn full" onclick="dbTest()">Проверить базу</button><div id="dbres" style="margin-top:8px;font-size:13px;line-height:1.7"></div><h3>Резервная копия</h3><p class="note">Данные хранятся в браузере. Сохраняйте копию регулярно.</p>
    <button class="btn full" onclick="exportData()">Скачать копию</button>
    <div class="field" style="margin-top:10px"><label>Восстановить из файла</label><input type="file" accept=".json" onchange="importData(event)"></div>
    <button class="btn ghost full" style="margin-top:10px" onclick="adminLogout()">Выйти из админки</button>`;
@@ -644,6 +645,34 @@ const PAGES = {
 };
 function openPage(k){ modal(PAGES[k]()) }
 
+async function dbTest(){
+  const o=$('#dbres'), say=t=>{ o.innerHTML+=t+'<br>' }; o.innerHTML='Проверяю…<br>';
+  if(!CLOUD()) return say('❌ База не подключена (пустые SB_URL / SB_KEY)');
+  try{ await api('/rest/v1/kv?select=tbl&limit=1'); say('✅ Чтение из базы работает') }catch(e){ return say('❌ Чтение не работает: '+esc(String(e.message).slice(0,160))) }
+  say(sess?'✅ Вы вошли в аккаунт':'❌ Вы не вошли в аккаунт — данные не сохраняются. Войдите через «Войти».');
+  if(!sess) return;
+  try{ await api('/rest/v1/kv?on_conflict=tbl,id',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify([{tbl:'test',id:'t',data:{ok:1}}])}); say('✅ Запись работает'); await api('/rest/v1/kv?tbl=eq.test&id=eq.t',{method:'DELETE'}) }
+  catch(e){ say('❌ Запись не работает: '+esc(String(e.message).slice(0,200))) }
+  say('Профилей в базе: '+users.length+', товаров: '+products.length) }
+
+/* ===== Забыли пароль (письмо на почту) ===== */
+function forgot(){ modal(`<h2>Забыли пароль?</h2><p class="note" style="margin-bottom:10px">Введите почту аккаунта — отправим ссылку для смены пароля.</p><div class="field"><input id="fp" type="email" placeholder="Почта"></div><button class="btn full" onclick="sendReset()">Отправить ссылку</button>`) }
+async function sendReset(){
+  const e=$('#fp').value.trim().toLowerCase(); if(!/^\S+@\S+\.\S+$/.test(e)) return toast('Проверьте почту');
+  if(!CLOUD()) return toast('Сброс пароля работает при подключённой базе');
+  try{ const r=await fetch(SB_URL+'/auth/v1/recover?redirect_to='+encodeURIComponent(location.href.split('#')[0].split('?')[0]),{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});
+    if(!r.ok) throw 0; modal('<h2>Проверьте почту</h2><p>Если такой аккаунт есть, мы отправили ссылку для смены пароля. Загляните и в «Спам».</p>') }
+  catch(x){ toast('Не удалось отправить письмо. Попробуйте позже') } }
+function checkRecovery(){
+  const h=new URLSearchParams(location.hash.slice(1)); if(h.get('type')!=='recovery'||!h.get('access_token')) return;
+  const tok=h.get('access_token'); history.replaceState(null,'',location.pathname);
+  modal(`<h2>Новый пароль</h2><div class="field"><input id="np" type="password" placeholder="Новый пароль (от 6 символов)" autocomplete="new-password"></div><button class="btn full" onclick="setPw('${tok}')">Сохранить</button>`) }
+async function setPw(tok){
+  const pw=$('#np').value; if(pw.length<6) return toast('Пароль — минимум 6 символов');
+  try{ const r=await fetch(SB_URL+'/auth/v1/user',{method:'PUT',headers:{apikey:SB_KEY,Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+    if(!r.ok) throw 0; closeM(); toast('Пароль изменён. Теперь войдите.'); openAuth() }
+  catch(e){ toast('Ссылка устарела. Запросите новую') } }
+
 /* ===== Бот-помощник (ответы по ключевым словам, бесплатно) ===== */
 const BOT = [
  {k:['размер','таблиц','маломер','мерк'],a:'Китайские размеры меньше наших. Откройте «Таблицу размеров» в подвале сайта. Если сомневаетесь между двумя размерами — берите больший или спросите нас в WhatsApp.'},
@@ -678,6 +707,7 @@ function applyLang(l){ lang=l; localStorage.setItem('wsw_lang',l); const d=D[l];
 function enterSite(reg){ localStorage.setItem('wsw_intro','1'); const i=$('#intro'); i.classList.add('out'); setTimeout(()=>i.remove(),700); if(reg&&!me) openAuth('up') }
 $('#lg').innerHTML=['West Side','Wear'].map((w,li)=>'<div>'+[...w].map((ch,i)=>`<span style="animation-delay:${(i+li*9)*.05}s${li?';color:var(--acc)':''}">${ch===' '?'&nbsp;':ch}</span>`).join('')+'</div>').join('');
 applyLang(lang);
+checkRecovery();
 if(CLOUD()){ if(me&&!sess) me=null; (sess?refresh():Promise.resolve()).then(pull) }
 if(/^#p\d+$/.test(location.hash)) openProduct(+location.hash.slice(2));
 </script>
